@@ -1,0 +1,42 @@
+name: Autotools CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: autoconf
+      run: autoreconf -i
+
+    - name: configure
+      run: ./configure
+
+    - name: dist
+      run: make dist
+
+    - name: extract
+      run: tar xf test-1.0.0.tar.gz
+
+    - name: configure 2
+      run: |
+        cd test-1.0.0
+        ./configure
+    - name: make
+      run: |
+        cd test-1.0.0
+        make
+    - name: install
+      run: |
+        cd test-1.0.0
+        t=$(mktemp -d) || exit
+        DESTDIR=$t make install
+

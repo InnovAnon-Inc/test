@@ -4,3 +4,5 @@ SUBDIRS = src
 #libtool: $(LIBTOOL_DEPS)
 #	$(SHELL) ./config.status libtool
 
+ACLOCAL_AMFLAGS = -I m4
+

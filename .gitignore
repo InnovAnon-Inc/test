@@ -17,6 +17,7 @@ configure~
 depcomp
 install-sh
 ltmain.sh
+m4/*
 missing
 src/*.o
 src/.deps/

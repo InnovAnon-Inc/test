@@ -13,12 +13,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-
-    - name: update package manager
-      run: sudo apt update
-
-    - name: install libcheck
-      run: sudo apt install -y check
+    - uses: awalsh128/cache-apt-pkgs-action@latest
+      with:
+        packages: check doxygen
+        version: 1.0
 
     - name: autoconf
       run: autoreconf -i

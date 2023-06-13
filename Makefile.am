@@ -1,4 +1,4 @@
-SUBDIRS = src
+SUBDIRS = src . tests
 
 #LIBTOOL_DEPS = @LIBTOOL_DEPS@
 #libtool: $(LIBTOOL_DEPS)

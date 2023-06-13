@@ -6,7 +6,7 @@
 
 START_TEST(test_foo) {
 	err_t e = foo();
-	ck_assert_int_neq(e, EOF);
+	ck_assert_int_ne(e, EOF);
 }
 END_TEST
 

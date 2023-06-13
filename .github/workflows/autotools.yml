@@ -33,29 +33,3 @@ jobs:
     - name: make distcheck
       run: make distcheck
 
-    - name: version
-      #run: echo "::set-output name=version::$(./bin/azblogfilter --version)"
-      run: echo "::set-output name=version::1.0.0"
-      id: version
-    - name: release
-      uses: actions/create-release@v1
-      id: create_release
-      with:
-        draft: false
-        prerelease: false
-        release_name: ${{ steps.version.outputs.version }}
-        tag_name: ${{ github.ref }}
-        body_path: ChangeLog
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-
-    - name: upload linux artifact
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ github.token }}
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./test-${{ steps.version.outputs.version }}.tar.gz
-        asset_name: test-${{ steps.version.outputs.version }}.tar.gz
-        asset_content_type: application/gzip
-

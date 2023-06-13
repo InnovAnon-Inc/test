@@ -27,9 +27,53 @@ jobs:
     - name: make
       run: make
 
+    # unit test
     - name: make check
       run: make check
 
     - name: make distcheck
       run: make distcheck
+
+    #TODO docs / GitHub pages
+
+    - name: dist
+      run: make dist
+
+    - name: extract
+      run: tar xf test-1.0.0.tar.gz
+
+    # integration test
+    - name: configure 2
+      run: |
+        cd test-1.0.0
+        ./configure
+    - name: make
+      run: |
+        cd test-1.0.0
+        make
+    - name: install
+      run: |
+        cd test-1.0.0
+        t=$(mktemp -d) || exit
+        DESTDIR=$t make install
+
+
+
+    - uses: rymndhng/release-on-push-action@master
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        bump_version_scheme: patch
+
+
+
+    - name: upload linux artifact
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./test-${{ steps.version.outputs.version }}.tar.gz
+        asset_name: test-${{ steps.version.outputs.version }}.tar.gz
+        asset_content_type: application/gzip
 

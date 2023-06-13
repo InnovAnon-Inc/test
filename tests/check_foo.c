@@ -1,11 +1,8 @@
 #include "config.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <check.h>
 #include "../src/foo.h"
-
-int main(void) {
-	return EXIT_SUCCESS;
-}
 
 START_TEST(test_foo) {
 	err_t e = foo();
@@ -17,7 +14,7 @@ Suite *foo_suite(void) {
 	Suite *s;
 	TCase *tc_core;
 
-	s = suite_create("Moo");
+	s = suite_create("Foo");
 
 	/* Core test case */
 	tc_core = tcase_create("Core");

@@ -1,10 +1,7 @@
-bin_PROGRAMS = test
-test_SOURCES = test.c
+bin_PROGRAMS = main
+main_SOURCES = main.c
+main_LDADD = libfoo.la
 
-clean-local:
-	@rm config.status configure config.log
-	@rm Makefile
-	@rm -r autom4te.cache/
-	@rm aclocal.m4
-	@rm compile install-sh missing Makefile.in
+lib_LTLIBRARIES = libfoo.la
+libfoo_la_SOURCES = foo.c
 

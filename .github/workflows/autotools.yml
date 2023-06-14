@@ -64,6 +64,10 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       with:
         bump_version_scheme: patch
+        use_github_release_notes: true
+        tag_prefix: v
+    - name: release
+      id: release
 
 
 
@@ -72,7 +76,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
       with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        upload_url: ${{ steps.release.outputs.upload_url }}
         asset_path: ./test-${{ steps.version.outputs.version }}.tar.gz
         asset_name: test-${{ steps.version.outputs.version }}.tar.gz
         asset_content_type: application/gzip

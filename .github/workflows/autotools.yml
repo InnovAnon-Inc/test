@@ -36,48 +36,41 @@ jobs:
 
     #TODO docs / GitHub pages
 
-    - name: dist
-      run: make dist
+#    - name: dist
+#      run: make dist
+#
+#    - name: extract
+#      run: tar xf test-1.0.0.tar.gz
+#
+#    # integration test
+#    - name: configure 2
+#      run: |
+#        cd test-1.0.0
+#        ./configure
+#    - name: make
+#      run: |
+#        cd test-1.0.0
+#        make
+#    - name: install
+#      run: |
+#        cd test-1.0.0
+#        t=$(mktemp -d) || exit
+#        DESTDIR=$t make install
 
-    - name: extract
-      run: tar xf test-1.0.0.tar.gz
 
-    # integration test
-    - name: configure 2
-      run: |
-        cd test-1.0.0
-        ./configure
-    - name: make
-      run: |
-        cd test-1.0.0
-        make
-    - name: install
-      run: |
-        cd test-1.0.0
-        t=$(mktemp -d) || exit
-        DESTDIR=$t make install
-
-
-
-    - uses: rymndhng/release-on-push-action@master
+  release:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+    - uses: actions/checkout@master
+    - name: Create release
+      uses: Roang-zero1/github-create-release-action@v2
       env:
-        GITHUB_TOKEN: ${{ github.token }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload release artifacts
+      uses: Roang-zero1/github-upload-release-artifacts-action@v2
       with:
-        bump_version_scheme: patch
-        use_github_release_notes: true
-        tag_prefix: v
-    - name: release
-      id: release
-
-
-
-    - name: upload linux artifact
-      uses: actions/upload-release-asset@v1
+        args: "dist/bin/ dist/shell/compiled.sh"
       env:
-        GITHUB_TOKEN: ${{ github.token }}
-      with:
-        upload_url: ${{ steps.release.outputs.upload_url }}
-        asset_path: ./test-${{ steps.version.outputs.version }}.tar.gz
-        asset_name: test-${{ steps.version.outputs.version }}.tar.gz
-        asset_content_type: application/gzip
-
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            

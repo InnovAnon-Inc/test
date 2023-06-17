@@ -31,3 +31,4 @@ src/main
 src/test
 stamp-h1
 test-*.*.*.tar.gz
+test-driver

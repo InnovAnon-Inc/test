@@ -18,21 +18,20 @@ jobs:
         packages: check doxygen
         version: 1.0
 
-    - name: autoconf
-      run: autoreconf -i
-
     - name: configure
-      run: ./configure
+      run: cmake -S . -B build -GNinja
 
-    - name: make
-      run: make
+    - name: build
+      run: cmake --build build
 
-    # unit test
-    - name: make check
-      run: make check
+    - name: unit test
+      run: cmake --build build --target test
 
-    - name: make distcheck
-      run: make distcheck
+    - name: docs
+      run: cmake --build build --target docs
+
+    #- name: make distcheck
+    #  run: make distcheck
 
     #TODO docs / GitHub pages
 

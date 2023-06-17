@@ -1,11 +1,14 @@
 AC_INIT([test], [1.0.0], [InnovAnon-Inc@gmx.com])
-AM_INIT_AUTOMAKE([-Wall -Werror])
+AC_CONFIG_AUX_DIR([build-aux]) #
+#AM_INIT_AUTOMAKE([-Wall -Werror])
+AM_INIT_AUTOMAKE([-Wall -Werror foreign]) #
 AM_PROG_AR
 LT_INIT
 
 AC_PROG_CC
 AC_SUBST([LIBTOOL_DEPS])
 
+PKG_PROG_PKG_CONFIG #
 PKG_CHECK_MODULES([CHECK], [check])
 
 AC_CONFIG_MACRO_DIRS([m4])

@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 set -euxo nounset
-[[ $# > 1 ]]
+(( $# ))
 
 autoreconf -i
 ./configure

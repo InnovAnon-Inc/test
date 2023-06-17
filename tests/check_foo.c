@@ -1,8 +1,8 @@
-#include "config.h"
+//#include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <check.h>
-#include "../src/foo.h"
+#include "modern/foo.h"
 
 START_TEST(test_foo) {
 	err_t e = foo();

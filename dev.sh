@@ -1,12 +1,17 @@
 #! /usr/bin/env bash
 set -euxo nounset
-[[ $# > 1 ]]
+(( ! $# ))
 
-autoreconf -i
-./configure
-make
-make check
-make distcheck
+#autoreconf -i
+#./configure
+#make
+#make check
+#make distcheck
+
+cmake -S . -B build -GNinja
+cmake --build build
+cmake --build build --target test
+cmake --build build --target docs
 
 #git clean -dfX
 [[ ! -e .gitignore-tmp ]]

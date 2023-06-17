@@ -1,6 +1,6 @@
-#include "config.h"
+//#include "config.h"
 #include <stdio.h>
-#include "foo.h"
+#include "modern/foo.h"
 
 err_t foo() {
 	 return puts("paadh chak la");

@@ -1,7 +1,7 @@
-#include "config.h"
+//#include "config.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "foo.h"
+#include "modern/foo.h"
 
 int main(const int c, char *const args[]) {
 	const err_t e = foo();

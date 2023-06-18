@@ -2,9 +2,9 @@ name: Autotools CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "autotools" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "autotools" ]
 
 jobs:
   build:

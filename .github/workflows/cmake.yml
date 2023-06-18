@@ -102,12 +102,21 @@ jobs:
       uses: softprops/action-gh-release@v1
       #if: startsWith(github.ref, 'refs/tags/')
       with:
+        #body:
+        #body_path:
         tag_name: ${{ steps.tag_version.outputs.new_tag }}
+        fail_on_unmatched_files: true
+        #target_commitish: cmake
+        generate_release_notes: true
         #files: test-1.0.0.tar.gz
         files: |
-          build/MyApp-1.0.0-Android.sh
-          build/MyApp-1.0.0-Android.tar.gz
-          build/MyApp-1.0.0-Android.tar.Z
+          build/MyApp-1.0.0-*.sh
+          build/MyApp-1.0.0-*.tar.gz
+          build/MyApp-1.0.0-*.tar.xz
+          build/MyApp-1.0.0-*.tar.Z
+          #build/MyApp-1.0.0-Android.sh
+          #build/MyApp-1.0.0-Android.tar.gz
+          #build/MyApp-1.0.0-Android.tar.Z
           build/MyApp-1.0.0-Source.tar.xz
 
 

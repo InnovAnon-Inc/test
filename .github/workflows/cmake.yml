@@ -94,10 +94,10 @@ jobs:
 #        name: Release ${{ steps.tag_version.outputs.new_tag }}
 #        body: ${{ steps.tag_version.outputs.changelog }}
 #
-#    - name: Release
-#      uses: softprops/action-gh-release@v1
-#      #if: startsWith(github.ref, 'refs/tags/')
-#      with:
-#        files: test-1.0.0.tar.gz
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      if: startsWith(github.ref, 'refs/tags/')
+      with:
+        files: test-1.0.0.tar.gz
 
 

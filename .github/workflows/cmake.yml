@@ -114,9 +114,9 @@ jobs:
           build/MyApp-1.0.0-*.tar.gz
           build/MyApp-1.0.0-*.tar.xz
           build/MyApp-1.0.0-*.tar.Z
-          #build/MyApp-1.0.0-Android.sh
-          #build/MyApp-1.0.0-Android.tar.gz
-          #build/MyApp-1.0.0-Android.tar.Z
           build/MyApp-1.0.0-Source.tar.xz
+        #build/MyApp-1.0.0-Android.sh
+        #build/MyApp-1.0.0-Android.tar.gz
+        #build/MyApp-1.0.0-Android.tar.Z
 
 

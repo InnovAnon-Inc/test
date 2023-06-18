@@ -18,7 +18,7 @@ jobs:
         #fetch-depth: 0
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: check doxygen ninja
+        packages: check doxygen Ninja
         version: 1.0
 
     - name: configure

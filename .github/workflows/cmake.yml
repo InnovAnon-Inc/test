@@ -104,9 +104,9 @@ jobs:
       with:
         #files: test-1.0.0.tar.gz
         files: |
-          build/MyApp--Android.sh
-          build/MyApp--Android.tar.gz
-          build/MyApp--Android.tar.Z
-          build/MyApp--Source.tar.xz
+          build/MyApp-1.0.0-Android.sh
+          build/MyApp-1.0.0-Android.tar.gz
+          build/MyApp-1.0.0-Android.tar.Z
+          build/MyApp-1.0.0-Source.tar.xz
 
 

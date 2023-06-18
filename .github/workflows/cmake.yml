@@ -18,7 +18,7 @@ jobs:
         #fetch-depth: 0
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: check doxygen
+        packages: check doxygen graphviz
         version: 1.0
 
     - name: Setup Ninja

@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.14...3.26)
 # Project name and a few useful settings. Other commands can pick up the results
 project(
   ModernCMakeExample
-  #VERSION 0.1
+  VERSION 0.1
   DESCRIPTION "An example project with CMake"
 #  LANGUAGES C)
   LANGUAGES C CXX)
@@ -71,11 +71,7 @@ if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR MODERN_CMAKE_BUILD_TESTING)
   add_subdirectory(tests)
 endif()
 
-
-
 #install(TARGETS app RUNTIME DESTINATION bin)
-
-
 
 include(InstallRequiredSystemLibraries)
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")

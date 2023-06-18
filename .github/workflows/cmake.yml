@@ -13,6 +13,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        #submodules: true
+        #fetch-depth: 0
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
         packages: check doxygen
@@ -32,6 +35,13 @@ jobs:
 
     #- name: make distcheck
     #  run: make distcheck
+
+    - name: deploy docs to gh-pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/cmake'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build/docs
 
     #TODO docs / GitHub pages
 

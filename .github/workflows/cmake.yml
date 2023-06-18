@@ -56,7 +56,7 @@ jobs:
       if: github.ref == 'refs/heads/cmake'
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build/docs
+        publish_dir: ./build/docs/html
 
     #TODO docs / GitHub pages
 

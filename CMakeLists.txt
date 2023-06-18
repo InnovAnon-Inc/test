@@ -27,7 +27,9 @@ if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
   include(CTest)
 
   # Docs only available if this is the main app
-  find_package(Doxygen)
+  find_package(Doxygen
+    REQUIRED dot
+    OPTIONAL_COMPONENTS mscgen dia)
   if(Doxygen_FOUND)
     add_subdirectory(docs)
   else()

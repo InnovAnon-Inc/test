@@ -12,6 +12,10 @@ cmake -S . -B build -GNinja -DCMAKE_BUILD_TYPE=Debug
 cmake --build build
 cmake --build build --target test
 cmake --build build --target docs
+#cpack --build build --config CPackConfig.cmake
+#cpack --build build --config CPackSourceConfig.cmake
+cmake --build build --target package
+cmake --build build --target package_source
 
 #git clean -dfX
 [[ ! -e .gitignore-tmp ]]

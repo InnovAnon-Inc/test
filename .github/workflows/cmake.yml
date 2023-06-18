@@ -58,8 +58,12 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./build/docs/html
 
-    #TODO docs / GitHub pages
-
+    - name: binary release archive
+      #run: cpack --build build --config CPackConfig.cmake
+      run: cmake --build build --target package
+    - name: source release archive
+      #run: cpack --build build --config CPackSourceConfig.cmake
+      run: cmake --build build --target package_source
 #    - name: dist
 #      run: make dist
 #

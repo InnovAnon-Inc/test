@@ -4,10 +4,14 @@ cmake_minimum_required(VERSION 3.14...3.26)
 # Project name and a few useful settings. Other commands can pick up the results
 project(
   ModernCMakeExample
-  VERSION 0.1
+  #VERSION 0.1
   DESCRIPTION "An example project with CMake"
 #  LANGUAGES C)
   LANGUAGES C CXX)
+set(CPACK_PACKAGE_NAME "MyApp")
+set(CPACK_PACKAGE_VERSION_MAJOR 1)
+set(CPACK_PACKAGE_VERSION_MINOR 0)
+set(CPACK_PACKAGE_VERSION_PATCH 0)
 
 # Only do these if this is the main project, and not if it is included through add_subdirectory
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
@@ -67,10 +71,23 @@ if((CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME OR MODERN_CMAKE_BUILD_TESTING)
   add_subdirectory(tests)
 endif()
 
+
+
+#install(TARGETS app RUNTIME DESTINATION bin)
+
+
+
 include(InstallRequiredSystemLibraries)
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
 set(CPACK_PACKAGE_VERSION_MAJOR "${Tutorial_VERSION_MAJOR}")
 set(CPACK_PACKAGE_VERSION_MINOR "${Tutorial_VERSION_MINOR}")
-set(CPACK_SOURCE_GENERATOR "TGZ")
+
+set(CPACK_SOURCE_GENERATOR "TXZ")
+set(CPACK_SOURCE_IGNORE_FILES
+  \\.git/
+  build/
+  ".*~$"
+)
+set(CPACK_VERBATIM_VARIABLES YES)
 include(CPack)
 

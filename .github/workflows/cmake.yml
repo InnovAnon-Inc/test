@@ -102,6 +102,7 @@ jobs:
       uses: softprops/action-gh-release@v1
       #if: startsWith(github.ref, 'refs/tags/')
       with:
+        tag_name: ${{ steps.tag_version.outputs.new_tag }}
         #files: test-1.0.0.tar.gz
         files: |
           build/MyApp-1.0.0-Android.sh

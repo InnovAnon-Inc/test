@@ -102,6 +102,11 @@ jobs:
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: test-1.0.0.tar.gz
+        #files: test-1.0.0.tar.gz
+        files: |
+          build/MyApp--Android.sh
+          build/MyApp--Android.tar.gz
+          build/MyApp--Android.tar.Z
+          build/MyApp--Source.tar.xz
 
 

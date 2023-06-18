@@ -8,5 +8,5 @@ It is good documentation because:
 2. I wrote it.
 3. Everything is documented (pretty easy since there's only one function)
 
-The single provided function is `::accumulate_vector`.
+The single provided function is `::foo`.
 

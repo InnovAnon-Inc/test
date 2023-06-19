@@ -117,7 +117,7 @@ jobs:
           build/MyApp-*.*.*-*.tar.xz
           build/MyApp-*.*.*-*.tar.Z
           build/MyApp-*.*.*-*.zip
-          build/MyApp-*.*.*-*.deb
+          build/MyApp_*.*.*_*.deb
         #build/MyApp-1.0.0-Source.tar.xz
         #build/MyApp-1.0.0-Android.sh
         #build/MyApp-1.0.0-Android.tar.gz

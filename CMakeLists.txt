@@ -12,12 +12,16 @@ set(CPACK_PACKAGE_NAME "MyApp")
 #set(CPACK_PACKAGE_VERSION_MINOR 0)
 #set(CPACK_PACKAGE_VERSION_PATCH 0)
 
-ADD_CUSTOM_TARGET(
-  auto_increment_version
-  ${CMAKE_COMMAND}
-  -D VERSION_FILE=${CMAKE_SOURCE_DIR}/version.h
-  -P ${CMAKE_SOURCE_DIR}/AutoVersion.cmake
-)
+#ADD_CUSTOM_TARGET(
+#  auto_increment_version
+#  ${CMAKE_COMMAND}
+#  -D VERSION_FILE=${CMAKE_SOURCE_DIR}/version.h
+#  -P ${CMAKE_SOURCE_DIR}/AutoVersion.cmake
+#)
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
+# Now it can be included like this:
+include(GitVersion)
 
 # Only do these if this is the main project, and not if it is included through add_subdirectory
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)

@@ -110,14 +110,14 @@ jobs:
         generate_release_notes: true
         #files: test-1.0.0.tar.gz
         files: |
-          build/MyApp-1.0.0-*.7z
-          build/MyApp-1.0.0-*.sh
-          build/MyApp-1.0.0-*.tar.bz2
-          build/MyApp-1.0.0-*.tar.gz
-          build/MyApp-1.0.0-*.tar.xz
-          build/MyApp-1.0.0-*.tar.Z
-          build/MyApp-1.0.0-*.zip
-          build/MyApp-1.0.0-*.deb
+          build/MyApp-*.*.*-*.7z
+          build/MyApp-*.*.*-*.sh
+          build/MyApp-*.*.*-*.tar.bz2
+          build/MyApp-*.*.*-*.tar.gz
+          build/MyApp-*.*.*-*.tar.xz
+          build/MyApp-*.*.*-*.tar.Z
+          build/MyApp-*.*.*-*.zip
+          build/MyApp-*.*.*-*.deb
         #build/MyApp-1.0.0-Source.tar.xz
         #build/MyApp-1.0.0-Android.sh
         #build/MyApp-1.0.0-Android.tar.gz

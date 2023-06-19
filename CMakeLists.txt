@@ -18,10 +18,11 @@ set(CPACK_PACKAGE_NAME "MyApp")
 #  -D VERSION_FILE=${CMAKE_SOURCE_DIR}/version.h
 #  -P ${CMAKE_SOURCE_DIR}/AutoVersion.cmake
 #)
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+
+#list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 # Now it can be included like this:
-include(GitVersion)
+#include(GitVersion)
 
 # Only do these if this is the main project, and not if it is included through add_subdirectory
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)

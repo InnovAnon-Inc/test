@@ -15,7 +15,7 @@ target_include_directories(modern_library PUBLIC ../include)
 #target_link_libraries(modern_library PRIVATE Boost::boost)
 
 # All users of this library will need at least C++11
-target_compile_features(modern_library PUBLIC cxx_std_11)
+#target_compile_features(modern_library PUBLIC cxx_std_11)
 
 # IDEs should put the headers in a nice place
 source_group(

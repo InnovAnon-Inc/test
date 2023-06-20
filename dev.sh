@@ -2,12 +2,6 @@
 set -euxo nounset
 (( $# ))
 
-#autoreconf -i
-#./configure
-#make
-#make check
-#make distcheck
-
 cmake -S . -B build -GNinja -DCMAKE_BUILD_TYPE=Debug
 cmake --build build
 cmake --build build --target test
@@ -22,6 +16,8 @@ cmake --build build --target package_source
 sort -u .gitignore > .gitignore-tmp
 mv -v .gitignore{-tmp,}
 
+exit
+git pull
 git add .
 git commit -m "$*"
 git push

@@ -1,4 +1,4 @@
-name: Autotools CI
+name: Kernel Mod CI
 
 on:
   push:

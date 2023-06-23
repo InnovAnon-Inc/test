@@ -2,21 +2,31 @@
 set -euxo nounset
 (( $# ))
 
-cmake -S . -B build -GNinja -DCMAKE_BUILD_TYPE=Debug
-cmake --build build
-cmake --build build --target test
-cmake --build build --target docs
+cmake -S . -B build                 \
+  -DKERNELHEADERS_DIR=$HOME/usr/src \
+  -GNinja -DCMAKE_BUILD_TYPE=Debug
+cmake --build build                 \
+  -DKERNELHEADERS_DIR=$HOME/usr/src
+cmake --build build                 \
+  -DKERNELHEADERS_DIR=$HOME/usr/src \
+  --target test
+cmake --build build                 \
+  -DKERNELHEADERS_DIR=$HOME/usr/src \
+  --target docs
 #cpack --build build --config CPackConfig.cmake
 #cpack --build build --config CPackSourceConfig.cmake
-cmake --build build --target package
-cmake --build build --target package_source
+cmake --build build                 \
+  -DKERNELHEADERS_DIR=$HOME/usr/src \
+  --target package
+cmake --build build                 \
+  -DKERNELHEADERS_DIR=$HOME/usr/src \
+  --target package_source
 
 #git clean -dfX
 [[ ! -e .gitignore-tmp ]]
 sort -u .gitignore > .gitignore-tmp
 mv -v .gitignore{-tmp,}
 
-exit
 git pull
 git add .
 git commit -m "$*"

@@ -18,7 +18,7 @@ jobs:
         #fetch-depth: 0
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: check doxygen graphviz linux-headers-$(uname -m) #linux-headers-$(uname -r)
+        packages: check doxygen graphviz linux-headers-amd64 #linux-headers-$(uname -m) #linux-headers-$(uname -r)
         version: 1.0
 
     - name: Setup Ninja

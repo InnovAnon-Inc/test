@@ -30,6 +30,7 @@ jobs:
         repository: torvalds/linux
         ref: v5.4
         #path: ${{ github.workspace }}/../linux-stable
+        path: linux-stable
         fetch-depth: 0
         #submodules: true
 

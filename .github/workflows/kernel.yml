@@ -12,16 +12,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - name: checkout this repo
+      uses: actions/checkout@v3
       #with:
         #submodules: true
         #fetch-depth: 0
-    - uses: awalsh128/cache-apt-pkgs-action@latest
+    - name: install build deps
+      uses: awalsh128/cache-apt-pkgs-action@latest
       with:
         packages: check doxygen graphviz
-          #linux-headers-amd64
-          #linux-headers-$(uname -m)
-          #linux-headers-$(uname -r)
         version: 1.0
 
     - name: checkout Linux kernel
@@ -29,7 +28,7 @@ jobs:
       with:
         # https://git.kernel.org/pub/scm/linux/kernel
         repository: torvalds/linux
-        ref: v5.4.210
+        ref: v5.4
         #path: ${{ github.workspace }}/../linux-stable
         fetch-depth: 0
         #submodules: true

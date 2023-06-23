@@ -18,8 +18,25 @@ jobs:
         #fetch-depth: 0
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: check doxygen graphviz linux-headers-amd64 #linux-headers-$(uname -m) #linux-headers-$(uname -r)
+        packages: check doxygen graphviz
+          #linux-headers-amd64
+          #linux-headers-$(uname -m)
+          #linux-headers-$(uname -r)
         version: 1.0
+
+    - name: checkout Linux kernel
+      run: git clone --tag v5.4.210 --depth=0 --recursive https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
+    # TODO cd linux-stahle
+    - name: fix bcmp linkage error
+      run: sed -i 's@^CLANG_FLAGS :=@& -fno-builtin-bcmp @' Makefile
+    - name: clean kernel source
+      run: make LLVM=$CLANG_PATH mrproper
+    - name: configure kernel
+      rin: make LLVM=$CLANG_PATH defconfig
+    - name: setup for building external modules
+      run: make LLVM=$CLANG_PATH modules_prepare
+    - name: install sanitized kernel headers
+      run: make LLVM=$CLANG_PATH headers_install
 
     - name: Setup Ninja
       uses: ashutoshvarma/setup-ninja@master

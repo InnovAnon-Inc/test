@@ -43,7 +43,7 @@ endif()
 
 
 # Find kernel headers
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+#list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 find_package(KernelHeaders REQUIRED)
 
 

@@ -25,7 +25,7 @@ jobs:
         version: 1.0
 
     - name: checkout Linux kernel
-    - uses: actions/checkout@v3
+      uses: actions/checkout@v3
       with:
         # https://git.kernel.org/pub/scm/linux/kernel
         repository: torvalds/linux
@@ -40,19 +40,23 @@ jobs:
 
     - name: clean kernel source
       working-directory: ${{ HOME }}/linux-stable
-      run: make LLVM=$CLANG_PATH mrproper
+      # make LLVM=$CLANG_PATH mrproper
+      run: make LLVM=1 mrproper
 
     - name: configure kernel
       working-directory: ${{ HOME }}/linux-stable
-      run: make LLVM=$CLANG_PATH defconfig
+      # make LLVM=$CLANG_PATH defconfig
+      run: make LLVM=1 defconfig
 
     - name: setup for building external modules
       working-directory: ${{ HOME }}/linux-stable
-      run: make LLVM=$CLANG_PATH modules_prepare
+      # make LLVM=$CLANG_PATH modules_prepare
+      run: make LLVM=1 headers_install
 
     - name: install sanitized kernel headers
       working-directory: ${{ HOME }}/linux-stable
-      run: make LLVM=$CLANG_PATH headers_install
+      # make LLVM=$CLANG_PATH headers_install
+      run: make LLVM=1 headers_install
 
     - name: Setup Ninja
       uses: ashutoshvarma/setup-ninja@master

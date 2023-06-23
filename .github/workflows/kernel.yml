@@ -30,31 +30,31 @@ jobs:
         # https://git.kernel.org/pub/scm/linux/kernel
         repository: torvalds/linux
         ref: v5.4.210
-        path: ${{ home }}/linux-stable
+        path: ${{ github.workspace }}/../linux-stable
         fetch-depth: 0
         #submodules: true
 
     - name: fix bcmp linkage error
-      working-directory: ${{ home }}/linux-stable
+      working-directory: ${{ github.workspace }}/../linux-stable
       run: sed -i 's@^CLANG_FLAGS :=@& -fno-builtin-bcmp @' Makefile
 
     - name: clean kernel source
-      working-directory: ${{ home }}/linux-stable
+      working-directory: ${{ github.workspace }}/../linux-stable
       # make LLVM=$CLANG_PATH mrproper
       run: make LLVM=1 mrproper
 
     - name: configure kernel
-      working-directory: ${{ home }}/linux-stable
+      working-directory: ${{ github.workspace }}/../linux-stable
       # make LLVM=$CLANG_PATH defconfig
       run: make LLVM=1 defconfig
 
     - name: setup for building external modules
-      working-directory: ${{ home }}/linux-stable
+      working-directory: ${{ github.workspace }}/../linux-stable
       # make LLVM=$CLANG_PATH modules_prepare
-      run: make LLVM=1 headers_install
+      run: make LLVM=1 modules_prepare
 
     - name: install sanitized kernel headers
-      working-directory: ${{ home }}/linux-stable
+      working-directory: ${{ github.workspace }}/../linux-stable
       # make LLVM=$CLANG_PATH headers_install
       run: make LLVM=1 headers_install
 

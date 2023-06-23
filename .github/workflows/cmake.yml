@@ -1,4 +1,4 @@
-name: Autotools CI
+name: CMake CI
 
 on:
   push:

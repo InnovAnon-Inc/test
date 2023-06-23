@@ -20,7 +20,7 @@ jobs:
     - name: install build deps
       uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: check doxygen graphviz
+        packages: check doxygen graphviz libelf-dev
         version: 1.0
 
     - name: checkout Linux kernel

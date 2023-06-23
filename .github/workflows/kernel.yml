@@ -25,17 +25,33 @@ jobs:
         version: 1.0
 
     - name: checkout Linux kernel
-      run: git clone --tag v5.4.210 --depth=0 --recursive https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git
-    # TODO cd linux-stahle
+    - uses: actions/checkout@v3
+      with:
+        # https://git.kernel.org/pub/scm/linux/kernel
+        repository: torvalds/linux
+        ref: v5.4.210
+        path: ${{ HOME }}/linux-stable
+        fetch-depth: 0
+        #submodules: true
+
     - name: fix bcmp linkage error
+      working-directory: ${{ HOME }}/linux-stable
       run: sed -i 's@^CLANG_FLAGS :=@& -fno-builtin-bcmp @' Makefile
+
     - name: clean kernel source
+      working-directory: ${{ HOME }}/linux-stable
       run: make LLVM=$CLANG_PATH mrproper
+
     - name: configure kernel
-      rin: make LLVM=$CLANG_PATH defconfig
+      working-directory: ${{ HOME }}/linux-stable
+      run: make LLVM=$CLANG_PATH defconfig
+
     - name: setup for building external modules
+      working-directory: ${{ HOME }}/linux-stable
       run: make LLVM=$CLANG_PATH modules_prepare
+
     - name: install sanitized kernel headers
+      working-directory: ${{ HOME }}/linux-stable
       run: make LLVM=$CLANG_PATH headers_install
 
     - name: Setup Ninja

@@ -36,31 +36,31 @@ jobs:
 
     - name: clean kernel source
       working-directory: linux-stable
-      run: make LLVM=1 mrproper
+      run: make mrproper
 
     - name: configure kernel
       working-directory: linux-stable
       env:
         INSTALL_PATH: ${{ github.workspace }}/linux
-      run: make LLVM=1 defconfig
+      run: make defconfig
       #run: make LLVM=1 INSTALL_PATH=${{ github.workspace }}/linux defconfig
 
     - name: build kernel
       working-directory: linux-stable
-      run: make LLVM=1 vmlinux
+      run: make vmlinux
 
     - name: build modules
       working-directory: linux-stable
-      run: make LLVM=1 modules
+      run: make modules
 
     - name: setup for building external modules
       working-directory: linux-stable
       #run: make LLVM=1 modules_prepare
-      run: make LLVM=1 INSTALL_MOD_PATH=${{ github.workspace }}/linux modules_install
+      run: make INSTALL_MOD_PATH=${{ github.workspace }}/linux modules_install
 
     - name: install sanitized kernel headers
       working-directory: linux-stable
-      run: make LLVM=1 INSTALL_HDR_PATH=${{ github.workspace }}/linux headers_install
+      run: make INSTALL_HDR_PATH=${{ github.workspace }}/linux headers_install
 
     - name: Setup Ninja
       uses: ashutoshvarma/setup-ninja@master

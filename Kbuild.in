@@ -1,0 +1,13 @@
+#KBUILD_CFLAGS_MODULE += "-masm=intel"
+
+obj-m := @module_name@.o
+#mymodule-objs := $(pathsubst %.c,%.o, $(filter %.c, @module_sources_str@))
+@module_name@-y := $(pathsubst %.c,%.o, $(filter %.c, @module_sources_str@))
+@module_name@-y += $(filter %_shipped, @module_sources_str@)
+
+#obj-m  := 8123.o
+#8123-y := 8123_if.o 8123_pci.o 8123_bin.o
+
+#ccflags-y := -I$(src)/include
+ccflags-y := $(filter %.h, @module_sources_str@)
+

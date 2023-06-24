@@ -34,10 +34,10 @@ jobs:
         fetch-depth: 0
         #submodules: true
 
-    - name: fix bcmp linkage error
-      # ${{ github.workspace }}/../linux-stable
-      working-directory: linux-stable
-      run: sed -i 's@^CLANG_FLAGS :=@& -fno-builtin-bcmp @' Makefile
+#    - name: fix bcmp linkage error
+#      # ${{ github.workspace }}/../linux-stable
+#      working-directory: linux-stable
+#      run: sed -i 's@^CLANG_FLAGS :=@& -fno-builtin-bcmp @' Makefile
 
     - name: clean kernel source
       # ${{ github.workspace }}/../linux-stable
@@ -55,12 +55,17 @@ jobs:
       # ${{ github.workspace }}/../linux-stable
       working-directory: linux-stable
       # make LLVM=$CLANG_PATH modules_prepare
-      run: make LLVM=1 modules_prepare
+      #run: make LLVM=1 modules_prepare
+      env:
+        INSTALL_PATH: ${{ github.workspace }}/linux
+      run: make LLVM=1 modules_install
 
     - name: install sanitized kernel headers
       # ${{ github.workspace }}/../linux-stable
       working-directory: linux-stable
       # make LLVM=$CLANG_PATH headers_install
+      env:
+        INSTALL_PATH: ${{ github.workspace }}/linux
       run: make LLVM=1 headers_install
 
     - name: Setup Ninja
@@ -78,10 +83,6 @@ jobs:
     #      configure-options: -G Ninja
     #      build-type: Release
 
-    - name: find module dirs
-      run: find ${{ github.workspace }}/linux-stable -name build -type d
-    - name: find header dirs
-      run: find ${{ github.workspace }}/linux-stable -name user.h
 
     - name: configure
       run: cmake -S . -B build -GNinja -DCMAKE_BUILD_TYPE=Release \

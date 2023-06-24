@@ -79,9 +79,9 @@ jobs:
     #      build-type: Release
 
     - name: find module dirs
-      run: ls -ltra ${{ github.workspace }}/linux-stable/lib/modules/*/build/Makefile
+      run: find ${{ github.workspace }}/linux-stable -name build -type d
     - name: find header dirs
-      run: find ${{ github.workspace }}/linux-stable user.h
+      run: find ${{ github.workspace }}/linux-stable -name user.h
 
     - name: configure
       run: cmake -S . -B build -GNinja -DCMAKE_BUILD_TYPE=Release \

@@ -20,9 +20,9 @@ jobs:
     - name: install build deps
       uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: check doxygen graphviz libelf-dev     \
-          fakeroot build-essential ncurses-dev xz-utils \
-          libssl-dev bc flex libelf-dev bison
+        packages: check doxygen graphviz fakeroot \
+          build-essential xz-utils libssl-dev bc  \
+          flex libelf-dev bison
         version: 1.0
 
     - name: checkout Linux kernel

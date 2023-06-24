@@ -18,7 +18,6 @@ set(CPACK_PACKAGE_NAME "MyApp")
 
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS true)
-#set(kerneldir "" CACHE STRING "Path to the kernel build directory")
 
 # Change this to your module name 
 set(module_name "hello")
@@ -35,39 +34,12 @@ if(srcdir STREQUAL bindir)
   Create a build directory and run cmake from there.")
 endif()
 
-#if ("${kerneldir}" STREQUAL "")
-#  execute_process(COMMAND uname -r OUTPUT_VARIABLE uname_r OUTPUT_STRIP_TRAILING_WHITESPACE)
-#  set (kerneldir "/lib/modules/${uname_r}/build")
-#endif()
 
 
 
 # Find kernel headers
-#list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 find_package(KernelHeaders REQUIRED)
-
-
-
-find_file(kernel_makefile NAMES Makefile PATHS ${kerneldir} NO_DEFAULT_PATH)
-if (NOT kernel_makefile)
-  message(FATAL_ERROR "Kernel makefile not found in ${kerneldir}")
-endif()
-
-# Find the kernel headers directory
-# If you are using another kernel branch like 'linux-zen'
-# you might need to change the directory in which the header
-# file is searched
-# Or you can set the kernel_headers_dir directly...
-#find_path(
-#        kernel_headers_dir
-#        include/linux/user.h
-#        PATHS /usr/src/linux-zen/
-#)
-# ...like this
-# set(kernel_headers_dir <path-to-kernel-headers>)
-if (NOT KERNEL_HEADERS_DIR)
-  message(FATAL_ERROR "Kernel headers not found. Modifications to CMakeLists.txt needed.")
-endif()
 
 # Add kernel include directories to compilation process
 # This gives us juicy autocomplete

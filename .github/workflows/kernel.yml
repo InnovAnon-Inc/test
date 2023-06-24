@@ -23,45 +23,45 @@ jobs:
         packages: check doxygen graphviz libelf-dev
         version: 1.0
 
-#    - name: checkout Linux kernel
-#      uses: actions/checkout@v3
-#      with:
-#        # https://git.kernel.org/pub/scm/linux/kernel
-#        repository: torvalds/linux
-#        ref: v5.4
-#        #path: ${{ github.workspace }}/../linux-stable
-#        path: linux-stable
-#        fetch-depth: 0
-#        #submodules: true
-#
-#    - name: fix bcmp linkage error
-#      # ${{ github.workspace }}/../linux-stable
-#      working-directory: linux-stable
-#      run: sed -i 's@^CLANG_FLAGS :=@& -fno-builtin-bcmp @' Makefile
-#
-#    - name: clean kernel source
-#      # ${{ github.workspace }}/../linux-stable
-#      working-directory: linux-stable
-#      # make LLVM=$CLANG_PATH mrproper
-#      run: make LLVM=1 mrproper
-#
-#    - name: configure kernel
-#      # ${{ github.workspace }}/../linux-stable
-#      working-directory: linux-stable
-#      # make LLVM=$CLANG_PATH defconfig
-#      run: make LLVM=1 defconfig
-#
-#    - name: setup for building external modules
-#      # ${{ github.workspace }}/../linux-stable
-#      working-directory: linux-stable
-#      # make LLVM=$CLANG_PATH modules_prepare
-#      run: make LLVM=1 modules_prepare
-#
-#    - name: install sanitized kernel headers
-#      # ${{ github.workspace }}/../linux-stable
-#      working-directory: linux-stable
-#      # make LLVM=$CLANG_PATH headers_install
-#      run: make LLVM=1 headers_install
+    - name: checkout Linux kernel
+      uses: actions/checkout@v3
+      with:
+        # https://git.kernel.org/pub/scm/linux/kernel
+        repository: torvalds/linux
+        ref: v5.4
+        #path: ${{ github.workspace }}/../linux-stable
+        path: linux-stable
+        fetch-depth: 0
+        #submodules: true
+
+    - name: fix bcmp linkage error
+      # ${{ github.workspace }}/../linux-stable
+      working-directory: linux-stable
+      run: sed -i 's@^CLANG_FLAGS :=@& -fno-builtin-bcmp @' Makefile
+
+    - name: clean kernel source
+      # ${{ github.workspace }}/../linux-stable
+      working-directory: linux-stable
+      # make LLVM=$CLANG_PATH mrproper
+      run: make LLVM=1 mrproper
+
+    - name: configure kernel
+      # ${{ github.workspace }}/../linux-stable
+      working-directory: linux-stable
+      # make LLVM=$CLANG_PATH defconfig
+      run: make LLVM=1 defconfig
+
+    - name: setup for building external modules
+      # ${{ github.workspace }}/../linux-stable
+      working-directory: linux-stable
+      # make LLVM=$CLANG_PATH modules_prepare
+      run: make LLVM=1 modules_prepare
+
+    - name: install sanitized kernel headers
+      # ${{ github.workspace }}/../linux-stable
+      working-directory: linux-stable
+      # make LLVM=$CLANG_PATH headers_install
+      run: make LLVM=1 headers_install
 
     - name: Setup Ninja
       uses: ashutoshvarma/setup-ninja@master
@@ -78,10 +78,12 @@ jobs:
     #      configure-options: -G Ninja
     #      build-type: Release
 
+    - name: find dirs
+      run: find ${{ github.workspace }}/linux-stable -name Makefile
     - name: configure
-      run: cmake -S . -B build -GNinja -DCMAKE_BUILD_TYPE=Release
-        #-DKERNEL_MODULES_DIR=${{ github.workspace }}/linux-stable/lib/modules/$(uname -r)/build
-        #-DKERNEL_SOURCE_DIR=${{ github.workspace }}
+      run: cmake -S . -B build -GNinja -DCMAKE_BUILD_TYPE=Release \
+        -DKERNEL_MODULES_DIR=${{ github.workspace }}/linux-stable/lib/modules/$(uname -r)/build \
+        -DKERNEL_SOURCE_DIR=${{ github.workspace }}/linux-stable
 
     - name: build
       run: cmake --build build

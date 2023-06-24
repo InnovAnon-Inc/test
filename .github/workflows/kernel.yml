@@ -49,6 +49,8 @@ jobs:
       # ${{ github.workspace }}/../linux-stable
       working-directory: linux-stable
       # make LLVM=$CLANG_PATH defconfig
+      env:
+        INSTALL_PATH: ${{ github.workspace }}/linux
       run: make LLVM=1 defconfig
 
     - name: setup for building external modules
@@ -56,8 +58,6 @@ jobs:
       working-directory: linux-stable
       # make LLVM=$CLANG_PATH modules_prepare
       #run: make LLVM=1 modules_prepare
-      env:
-        INSTALL_PATH: ${{ github.workspace }}/linux
       run: make LLVM=1 modules_install
 
     - name: install sanitized kernel headers

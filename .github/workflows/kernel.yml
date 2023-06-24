@@ -28,60 +28,38 @@ jobs:
       with:
         # https://git.kernel.org/pub/scm/linux/kernel
         repository: torvalds/linux
-        ref: v5.4
-        #path: ${{ github.workspace }}/../linux-stable
+        #ref: v5.4
+        ref: v6.3
         path: linux-stable
         fetch-depth: 1
         #submodules: true
 
-#    - name: fix bcmp linkage error
-#      # ${{ github.workspace }}/../linux-stable
-#      working-directory: linux-stable
-#      run: sed -i 's@^CLANG_FLAGS :=@& -fno-builtin-bcmp @' Makefile
-
     - name: clean kernel source
-      # ${{ github.workspace }}/../linux-stable
       working-directory: linux-stable
-      # make LLVM=$CLANG_PATH mrproper
       run: make LLVM=1 mrproper
 
     - name: configure kernel
-      # ${{ github.workspace }}/../linux-stable
       working-directory: linux-stable
-      # make LLVM=$CLANG_PATH defconfig
       env:
         INSTALL_PATH: ${{ github.workspace }}/linux
-      run: make LLVM=1 INSTALL_PATH=${{ github.workspace }}/linux defconfig
+      run: make LLVM=1 defconfig
+      #run: make LLVM=1 INSTALL_PATH=${{ github.workspace }}/linux defconfig
 
     - name: build kernel
       working-directory: linux-stable
-      env:
-        INSTALL_PATH: ${{ github.workspace }}/linux
       run: make LLVM=1 vmlinux
 
     - name: build modules
       working-directory: linux-stable
-      env:
-        INSTALL_PATH: ${{ github.workspace }}/linux
       run: make LLVM=1 modules
 
     - name: setup for building external modules
-      # ${{ github.workspace }}/../linux-stable
       working-directory: linux-stable
-      # make LLVM=$CLANG_PATH modules_prepare
       #run: make LLVM=1 modules_prepare
-      env:
-        INSTALL_PATH: ${{ github.workspace }}/linux
-      #run: make LLVM=1 INSTALL_PATH=${{ github.workspace }}/linux modules_install
       run: make LLVM=1 INSTALL_MOD_PATH=${{ github.workspace }}/linux modules_install
 
     - name: install sanitized kernel headers
-      # ${{ github.workspace }}/../linux-stable
       working-directory: linux-stable
-      # make LLVM=$CLANG_PATH headers_install
-      env:
-        INSTALL_PATH: ${{ github.workspace }}/linux
-      #run: make LLVM=1 INSTALL_PATH=${{ github.workspace }}/linux headers_install
       run: make LLVM=1 INSTALL_HDR_PATH=${{ github.workspace }}/linux headers_install
 
     - name: Setup Ninja

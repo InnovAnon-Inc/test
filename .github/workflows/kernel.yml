@@ -53,6 +53,18 @@ jobs:
         INSTALL_PATH: ${{ github.workspace }}/linux
       run: make LLVM=1 INSTALL_PATH=${{ github.workspace }}/linux defconfig
 
+    - name: build kernel
+      working-directory: linux-stable
+      env:
+        INSTALL_PATH: ${{ github.workspace }}/linux
+      run: make LLVM=1 vmlinux
+
+    - name: build modules
+      working-directory: linux-stable
+      env:
+        INSTALL_PATH: ${{ github.workspace }}/linux
+      run: make LLVM=1 modules
+
     - name: setup for building external modules
       # ${{ github.workspace }}/../linux-stable
       working-directory: linux-stable

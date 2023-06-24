@@ -31,7 +31,7 @@ jobs:
         ref: v5.4
         #path: ${{ github.workspace }}/../linux-stable
         path: linux-stable
-        fetch-depth: 0
+        fetch-depth: 1
         #submodules: true
 
 #    - name: fix bcmp linkage error
@@ -58,7 +58,10 @@ jobs:
       working-directory: linux-stable
       # make LLVM=$CLANG_PATH modules_prepare
       #run: make LLVM=1 modules_prepare
+      env:
+        INSTALL_PATH: ${{ github.workspace }}/linux
       run: make LLVM=1 INSTALL_PATH=${{ github.workspace }}/linux modules_install
+      #run: make LLVM=1 INSTALL_MOD_PATH=${{ github.workspace }}/linux modules_install
 
     - name: install sanitized kernel headers
       # ${{ github.workspace }}/../linux-stable
@@ -67,6 +70,7 @@ jobs:
       env:
         INSTALL_PATH: ${{ github.workspace }}/linux
       run: make LLVM=1 INSTALL_PATH=${{ github.workspace }}/linux headers_install
+      #run: make LLVM=1 INSTALL_HDR_PATH=${{ github.workspace }}/linux headers_install
 
     - name: Setup Ninja
       uses: ashutoshvarma/setup-ninja@master

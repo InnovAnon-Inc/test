@@ -64,12 +64,22 @@ jobs:
       working-directory: linux-stable
       run: make INSTALL_HDR_PATH=${{ github.workspace }}/linux headers_install
 
+
+
+    - name: ls module dir
+      working-directory: ${{ github.workspace }}/linux
+      run: ls lib lib/modules lib/modules/*/build lib/modules/*/build/Makefile
     - name: find module dir
       working-directory: ${{ github.workspace }}/linux
       run: find -name Makefile
+    - name: ls header dir
+      working-directory: ${{ github.workspace }}/linux
+      run: ls include include/linux include/linux/user.h src src/linux-headers-*/
     - name: find header dir
       working-directory: ${{ github.workspace }}/linux
       run: find -name user.h
+
+
 
     - name: Setup Ninja
       uses: ashutoshvarma/setup-ninja@master

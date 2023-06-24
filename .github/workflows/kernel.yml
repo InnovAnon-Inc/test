@@ -57,12 +57,16 @@ jobs:
 
     - name: setup for building external modules
       working-directory: linux-stable
+      run: make INSTALL_PATH=${{ github.workspace }}/linux/lib modules_prepare
+
+    - name: setup for building external modules
+      working-directory: linux-stable
       #run: make LLVM=1 modules_prepare
-      run: make INSTALL_MOD_PATH=${{ github.workspace }}/linux modules_install
+      run: make INSTALL_MOD_PATH=${{ github.workspace }}/linux/lib modules_install
 
     - name: install sanitized kernel headers
       working-directory: linux-stable
-      run: make INSTALL_HDR_PATH=${{ github.workspace }}/linux headers_install
+      run: make INSTALL_HDR_PATH=${{ github.workspace }}/linux/usr/src headers_install
 
 
 
@@ -72,9 +76,10 @@ jobs:
     - name: find module dir
       working-directory: ${{ github.workspace }}/linux
       run: find -name Makefile
+
     - name: ls header dir
       working-directory: ${{ github.workspace }}/linux
-      run: ls include include/linux include/linux/user.h src src/linux-headers-*/
+      run: ls include include/linux/user.h src src/linux-headers-*/
     - name: find header dir
       working-directory: ${{ github.workspace }}/linux
       run: find -name user.h

@@ -51,14 +51,14 @@ jobs:
       # make LLVM=$CLANG_PATH defconfig
       env:
         INSTALL_PATH: ${{ github.workspace }}/linux
-      run: make LLVM=1 defconfig
+      run: make LLVM=1 INSTALL_PATH=${{ github.workspace }}/linux defconfig
 
     - name: setup for building external modules
       # ${{ github.workspace }}/../linux-stable
       working-directory: linux-stable
       # make LLVM=$CLANG_PATH modules_prepare
       #run: make LLVM=1 modules_prepare
-      run: make LLVM=1 modules_install
+      run: make LLVM=1 INSTALL_PATH=${{ github.workspace }}/linux modules_install
 
     - name: install sanitized kernel headers
       # ${{ github.workspace }}/../linux-stable
@@ -66,7 +66,7 @@ jobs:
       # make LLVM=$CLANG_PATH headers_install
       env:
         INSTALL_PATH: ${{ github.workspace }}/linux
-      run: make LLVM=1 headers_install
+      run: make LLVM=1 INSTALL_PATH=${{ github.workspace }}/linux headers_install
 
     - name: Setup Ninja
       uses: ashutoshvarma/setup-ninja@master

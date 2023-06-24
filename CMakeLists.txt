@@ -45,19 +45,29 @@ find_package(KernelHeaders REQUIRED)
 # This gives us juicy autocomplete
 include_directories(${KERNEL_HEADERS_DIR}/include)
 
+# TODO
+#file(GLOB HEADER_LIST CONFIGURE_DEPENDS "${ModernCMakeExample_SOURCE_DIR}/include/modern/*.h")
+
 # For some reason on my machine building the kernel module does 
 # not emit the 'compile_commands.json' file required for autocomplete
 # This is why there is a dummy static library compiled.
 # If you want you can use this to compile an actual static library
 # that you can use for unit tests or whatever.
-#add_library(dummy-lib STATIC ".dummy.c")
+add_library(modern_library STATIC "src/foo.c" ${HEADER_LIST})
+
+# TODO
+#target_include_directories(modern_library PUBLIC ../include)
+#source_group(
+#  TREE "${PROJECT_SOURCE_DIR}/include"
+#  PREFIX "Header Files"
+#  FILES ${HEADER_LIST})
 
 # If you used the dummy library for something not 'dummy' you can
 # uncomment the following line to add the library sources to the
 # kernel module.
 # get_target_property(module_sources dummy-lib SOURCES)
 get_target_property(module_sources modern_library SOURCES)
-list(APPEND module_sources "${module_name}.c")
+list(APPEND module_sources "apps/${module_name}.c")
 
 # Generate the list of source files that are going to be 
 # converted to object files in the Kbuild file
@@ -73,7 +83,7 @@ foreach (src ${module_sources})
 endforeach()
 
 # Add command to build the .ko file
-set(module_cmd ${CMAKE_MAKE_PROGRAM} -C ${kerneldir} M=${CMAKE_CURRENT_BINARY_DIR})
+set(module_cmd ${CMAKE_MAKE_PROGRAM} -C ${KERNEL_MODULES_DIR} M=${CMAKE_CURRENT_BINARY_DIR})
 add_custom_command(OUTPUT "${module_name}.ko"
   COMMAND ${module_cmd} modules
   WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}

@@ -2,6 +2,7 @@
 set -euxo nounset
 (( $# ))
 
+rm -rf build
 cmake -S . -B build                  \
   -DKERNEL_HEADERS_DIR=$HOME/usr/src \
   -DKERNEL_MODULES_DIR=$HOME/usr/lib/modules/6.2.10-1-aarch64-ARCH/build \

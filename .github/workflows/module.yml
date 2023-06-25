@@ -30,6 +30,8 @@ jobs:
       #working-directory: linux-stable
       # TODO v6.3
       run: wget https://github.com/InnovAnon-Inc/test/releases/download/${{ env.tag }}/linux-${{ env.tag }}.tar.xz
+    - name: create kernel installation directory
+      run: mkdir -v linux
     - name: extract kernel package
       run: tar xpf linux-${{ env.tag }}.tar.xz -C ${{ github.workspace }}/linux
 

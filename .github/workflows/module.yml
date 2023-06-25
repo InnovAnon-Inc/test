@@ -28,7 +28,8 @@ jobs:
 
     - name: download kernel package
       #working-directory: linux-stable
-      run: wget https://github.com/InnovAnon-Inc/test/releases/download/v${{ env.tag }}/linux-${{ env.tag }}.tar.xz
+      # TODO v6.3
+      run: wget https://github.com/InnovAnon-Inc/test/releases/download/${{ env.tag }}/linux-${{ env.tag }}.tar.xz
     - name: extract kernel package
       run: tar xpf linux-${{ env.tag }}.tar.xz -C ${{ github.workspace }}/linux
 
@@ -81,26 +82,6 @@ jobs:
     - name: source release archive
       #run: cpack --build build --config CPackSourceConfig.cmake
       run: cmake --build build --target package_source
-#    - name: dist
-#      run: make dist
-#
-#    - name: extract
-#      run: tar xf test-1.0.0.tar.gz
-#
-#    # integration test
-#    - name: configure 2
-#      run: |
-#        cd test-1.0.0
-#        ./configure
-#    - name: make
-#      run: |
-#        cd test-1.0.0
-#        make
-#    - name: install
-#      run: |
-#        cd test-1.0.0
-#        t=$(mktemp -d) || exit
-#        DESTDIR=$t make install
 
     - name: Bump version and push tag
       id: tag_version

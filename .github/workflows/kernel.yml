@@ -1,6 +1,11 @@
 name: Kernel CI
 
-on: workflow_dispatch
+on:
+  workflow_dispatch
+  push:
+    branches: [ "kernel" ]
+  pull_request:
+    branches: [ "kernel" ]
 
 env:
   tag: 6.3 # 5.4

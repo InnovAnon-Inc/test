@@ -4,11 +4,8 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 * * * *'
+  #[workflow_call]
 
-  push:
-    branches: [ "kernel" ]
-  pull_request:
-    branches: [ "kernel" ]
 
 env:
   tag: 6.3 # 5.4

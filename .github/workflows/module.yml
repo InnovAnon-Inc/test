@@ -5,12 +5,20 @@ on:
     branches: [ "kernel" ]
   pull_request:
     branches: [ "kernel" ]
+  workflow_run:
+    workflows: ["kernel"]
+    branches: [kernel]
+    types:
+      - completed
 
 env:
   tag: 6.3
 
 jobs:
+  #kernel:
+  #  uses: ./.github/workflows/kernel.yml
   build:
+    #needs: [kernel]
 
     runs-on: ubuntu-latest
 

@@ -2,6 +2,7 @@
 set -euxo nounset
 (( $# ))
 
+rm -rf build
 cmake -S . -B build -GNinja -DCMAKE_BUILD_TYPE=Debug
 cmake --build build
 cmake --build build --target test

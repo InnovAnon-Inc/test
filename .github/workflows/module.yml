@@ -51,11 +51,11 @@ jobs:
     #      build-type: Release
     
     - name: find module dir
-      run: ls ${{ github.workspace }}/linux/lib/modules/*/build
+      run: ls ${{ github.workspace }}/linux/bin/lib/modules/*/build/Makefile
 
 
     - name: configure
-      run: cmake -S .  -B build -GNinja -DCMAKE_BUILD_TYPE=Release -DKERNEL_MODULES_DIR=${{ github.workspace }}/linux/lib/modules/${{ env.tag }}.0/build -DKERNEL_HEADERS_DIR=${{ github.workspace }}/linux
+      run: cmake -S .  -B build -GNinja -DCMAKE_BUILD_TYPE=Release -DKERNEL_MODULES_DIR=${{ github.workspace }}/linux/bin/lib/modules/${{ env.tag }}.0/build -DKERNEL_HEADERS_DIR=${{ github.workspace }}/linux/bin
 
     - name: build
       run: cmake --build build

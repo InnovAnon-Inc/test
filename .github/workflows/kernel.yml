@@ -5,6 +5,11 @@ on:
   schedule:
     - cron: '0 * * * *'
 
+  push:
+    branches: [ "kernel" ]
+  pull_request:
+    branches: [ "kernel" ]
+
 env:
   tag: 6.3 # 5.4
 
@@ -29,37 +34,37 @@ jobs:
         repository: torvalds/linux
         #ref: v5.4
         ref: v${{ env.tag }}
-        path: linux-stable
+        path: linux/src
         fetch-depth: 1
         #submodules: true
 
     - name: clean kernel source
-      working-directory: linux-stable
+      working-directory: linux/src
       run: make mrproper
 
     - name: configure kernel
-      working-directory: linux-stable
-      run: make INSTALL_PATH=${{ github.workspace }}/linux defconfig
+      working-directory: linux/src
+      run: make INSTALL_PATH=${{ github.workspace }}/linux/bin defconfig
 
     - name: build kernel
-      working-directory: linux-stable
-      run: make INSTALL_PATH=${{ github.workspace }}/linux vmlinux
+      working-directory: linux/src
+      run: make INSTALL_PATH=${{ github.workspace }}/linux/bin vmlinux
 
     - name: build modules
-      working-directory: linux-stable
-      run: make INSTALL_PATH=${{ github.workspace }}/linux modules
+      working-directory: linux/src
+      run: make INSTALL_PATH=${{ github.workspace }}/linux/bin modules
 
     #- name: setup for building external modules
-    #  working-directory: linux-stable
+    #  working-directory: linux/src
     #  run: make INSTALL_PATH=${{ github.workspace }}/linux/lib modules_prepare
 
     - name: setup for building external modules
-      working-directory: linux-stable
-      run: make INSTALL_MOD_PATH=${{ github.workspace }}/linux modules_install
+      working-directory: linux/src
+      run: make INSTALL_MOD_PATH=${{ github.workspace }}/linux/bin modules_install
 
     - name: install sanitized kernel headers
-      working-directory: linux-stable
-      run: make INSTALL_HDR_PATH=${{ github.workspace }}/linux headers_install
+      working-directory: linux/src
+      run: make INSTALL_HDR_PATH=${{ github.workspace }}/linux/bin headers_install
 
     - name: create installation package
       working-directory: ${{ github.workspace }}/linux

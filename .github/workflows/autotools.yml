@@ -13,9 +13,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      #with:
+        #submodules: true
+        #fetch-depth: 0
     - uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: check doxygen
+        packages: check doxygen grqphviz
         version: 1.0
 
     - name: autoconf
@@ -57,6 +60,13 @@ jobs:
 #        t=$(mktemp -d) || exit
 #        DESTDIR=$t make install
 
+    - name: deploy docs to gh-pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/autotools'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build/docs/html
+
     - name: Bump version and push tag
       id: tag_version
       uses: mathieudutour/github-tag-action@v6.1
@@ -70,10 +80,29 @@ jobs:
 #        name: Release ${{ steps.tag_version.outputs.new_tag }}
 #        body: ${{ steps.tag_version.outputs.changelog }}
 #
-#    - name: Release
-#      uses: softprops/action-gh-release@v1
-#      #if: startsWith(github.ref, 'refs/tags/')
-#      with:
-#        files: test-1.0.0.tar.gz
+    - name: Release
+      uses: softprops/action-gh-release@v1
+      #if: startsWith(github.ref, 'refs/tags/')
+      with:
+        #body:
+        #body_path:
+        tag_name: ${{ steps.tag_version.outputs.new_tag }}
+        fail_on_unmatched_files: true
+        #target_commitish: cmake
+        generate_release_notes: true
+        #files: test-1.0.0.tar.gz
+        files: |
+          build/MyApp-*.*.*-*.7z
+          build/MyApp-*.*.*-*.sh
+          build/MyApp-*.*.*-*.tar.bz2
+          build/MyApp-*.*.*-*.tar.gz
+          build/MyApp-*.*.*-*.tar.xz
+          build/MyApp-*.*.*-*.tar.Z
+          build/MyApp-*.*.*-*.zip
+          build/myapp_*.*.*_*.deb
+        #build/MyApp-1.0.0-Source.tar.xz
+        #build/MyApp-1.0.0-Android.sh
+        #build/MyApp-1.0.0-Android.tar.gz
+        #build/MyApp-1.0.0-Android.tar.Z
 
 

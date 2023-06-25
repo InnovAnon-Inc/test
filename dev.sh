@@ -13,6 +13,7 @@ make distcheck
 sort -u .gitignore > .gitignore-tmp
 mv -v .gitignore{-tmp,}
 
+git pull
 git add .
 git commit -m "$*"
 git push

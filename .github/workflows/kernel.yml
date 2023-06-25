@@ -2,10 +2,8 @@ name: Kernel CI
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ "kernel" ]
-  pull_request:
-    branches: [ "kernel" ]
+  schedule:
+    - cron: '0 * * * *'
 
 env:
   tag: 6.3 # 5.4

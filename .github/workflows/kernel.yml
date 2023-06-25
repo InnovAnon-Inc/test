@@ -1,7 +1,6 @@
 name: Kernel CI
 
-on:
-  workflow_dispatch:
+on: workflow_dispatch
 
 env:
   tag: 6.3 # 5.4

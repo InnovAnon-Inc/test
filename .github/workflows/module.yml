@@ -57,7 +57,7 @@ jobs:
     - name: configure
       run: cmake -S . -B build -GNinja -DCMAKE_BUILD_TYPE=Release \
         -DKERNEL_MODULES_DIR=${{ github.workspace }}/linux/lib/modules/${{ env.tag }}.0/build \
-        -DKERNEL_SOURCE_DIR=${{ github.workspace }}/linux
+        -DKERNEL_HEADERS_DIR=${{ github.workspace }}/linux
 
     - name: build
       run: cmake --build build

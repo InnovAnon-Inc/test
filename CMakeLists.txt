@@ -55,6 +55,7 @@ include_directories(${KERNEL_HEADERS_DIR}/include)
 # that you can use for unit tests or whatever.
 add_library(modern_library STATIC "src/foo.c" ${HEADER_LIST})
 
+target_include_directories(modern_library PRIVATE ${KERNELHEADERS_INCLUDE_DIRS})
 # TODO
 #target_include_directories(modern_library PUBLIC ../include)
 #source_group(

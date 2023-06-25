@@ -1,10 +1,10 @@
-name: Kernel Mod CI
+name: Kernel CI
 
 on:
-  push:
-    branches: [ "kernel" ]
-  pull_request:
-    branches: [ "kernel" ]
+  workflow_dispatch:
+
+env:
+  tag: 6.3 # 5.4
 
 jobs:
   build:
@@ -12,17 +12,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: checkout this repo
-      uses: actions/checkout@v3
-      #with:
-        #submodules: true
-        #fetch-depth: 0
     - name: install build deps
       uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: check doxygen graphviz fakeroot \
-          build-essential xz-utils libssl-dev bc  \
-          flex libelf-dev bison rsync
+        packages: fakeroot build-essential xz-utils \
+          libssl-dev bc flex libelf-dev bison rsync
         version: 1.0
 
     - name: checkout Linux kernel
@@ -31,7 +25,7 @@ jobs:
         # https://git.kernel.org/pub/scm/linux/kernel
         repository: torvalds/linux
         #ref: v5.4
-        ref: v6.3
+        ref: v${{ env.tag }}
         path: linux-stable
         fetch-depth: 1
         #submodules: true
@@ -64,111 +58,31 @@ jobs:
       working-directory: linux-stable
       run: make INSTALL_HDR_PATH=${{ github.workspace }}/linux headers_install
 
+    - name: create installation package
+      working-directory: ${{ github.workspace }}/linux
+      run: tar acpf ../linux-${{ env.tag }}.tar.xz -C ${{ github.workspace }}/linux .
 
-
-    - name: Setup Ninja
-      uses: ashutoshvarma/setup-ninja@master
-      with:
-        # ninja version to download. Default: 1.10.0
-        version: 1.10.0
-
-    #- name: Build with CMake
-    #    uses: ashutoshvarma/action-cmake-build@master
-    #    with:
-    #      build-dir: ${{ runner.workspace }}/build
-    #      cc: ${{ matrix.config.cc }}
-    #      cxx: ${{ matrix.config.cxx }}
-    #      configure-options: -G Ninja
-    #      build-type: Release
-
-
-    - name: configure
-      run: cmake -S . -B build -GNinja -DCMAKE_BUILD_TYPE=Release \
-        -DKERNEL_MODULES_DIR=${{ github.workspace }}/linux/lib/modules/6.3.8/build \
-        -DKERNEL_SOURCE_DIR=${{ github.workspace }}/linux
-
-    - name: build
-      run: cmake --build build
-
-    - name: unit test
-      run: cmake --build build --target test
-
-    - name: docs
-      run: cmake --build build --target docs
-
-    #- name: make distcheck
-    #  run: make distcheck
-
-    - name: deploy docs to gh-pages
-      uses: peaceiris/actions-gh-pages@v3
-      if: github.ref == 'refs/heads/kernel'
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./build/docs/html
-
-    - name: binary release archive
-      #run: cpack --build build --config CPackConfig.cmake
-      run: cmake --build build --target package
-    - name: source release archive
-      #run: cpack --build build --config CPackSourceConfig.cmake
-      run: cmake --build build --target package_source
-#    - name: dist
-#      run: make dist
-#
-#    - name: extract
-#      run: tar xf test-1.0.0.tar.gz
-#
-#    # integration test
-#    - name: configure 2
-#      run: |
-#        cd test-1.0.0
-#        ./configure
-#    - name: make
-#      run: |
-#        cd test-1.0.0
-#        make
-#    - name: install
-#      run: |
-#        cd test-1.0.0
-#        t=$(mktemp -d) || exit
-#        DESTDIR=$t make install
+    #- name: sign installation package
+    #  working-directory: ${{ github.workspace }}
+    #  run: gpg --yes --detach-sig linux-${{ env.tag }}.tar.xz
 
     - name: Bump version and push tag
-      id: tag_version
       uses: mathieudutour/github-tag-action@v6.1
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
+        custom_tag: ${{ env.tag }}
 
-#    - name: Create a GitHub release
-#      uses: ncipollo/release-action@v1
-#      with:
-#        tag: ${{ steps.tag_version.outputs.new_tag }}
-#        name: Release ${{ steps.tag_version.outputs.new_tag }}
-#        body: ${{ steps.tag_version.outputs.changelog }}
-#
     - name: Release
       uses: softprops/action-gh-release@v1
       #if: startsWith(github.ref, 'refs/tags/')
+      working-directory: ${{ github.workspace }}
       with:
         #body:
         #body_path:
-        tag_name: ${{ steps.tag_version.outputs.new_tag }}
+        tag_name: ${{ env.tag }}
         fail_on_unmatched_files: true
         #target_commitish: cmake
-        generate_release_notes: true
-        #files: test-1.0.0.tar.gz
+        #generate_release_notes: true
         files: |
-          build/MyApp-*.*.*-*.7z
-          build/MyApp-*.*.*-*.sh
-          build/MyApp-*.*.*-*.tar.bz2
-          build/MyApp-*.*.*-*.tar.gz
-          build/MyApp-*.*.*-*.tar.xz
-          build/MyApp-*.*.*-*.tar.Z
-          build/MyApp-*.*.*-*.zip
-          build/myapp_*.*.*_*.deb
-        #build/MyApp-1.0.0-Source.tar.xz
-        #build/MyApp-1.0.0-Android.sh
-        #build/MyApp-1.0.0-Android.tar.gz
-        #build/MyApp-1.0.0-Android.tar.Z
-
+          linux-${{ env.tag }}.tar.xz
 

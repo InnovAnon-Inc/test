@@ -22,7 +22,7 @@ jobs:
       with:
         packages: check doxygen graphviz fakeroot \
           build-essential xz-utils libssl-dev bc  \
-          flex libelf-dev bison
+          flex libelf-dev bison rsync
         version: 1.0
 
     - name: checkout Linux kernel
@@ -42,33 +42,32 @@ jobs:
 
     - name: configure kernel
       working-directory: linux-stable
-      env:
-        INSTALL_PATH: ${{ github.workspace }}/linux
-      run: make defconfig
-      #run: make LLVM=1 INSTALL_PATH=${{ github.workspace }}/linux defconfig
+      run: make INSTALL_PATH=${{ github.workspace }}/linux defconfig
 
     - name: build kernel
       working-directory: linux-stable
-      run: make vmlinux
+      run: make INSTALL_PATH=${{ github.workspace }}/linux vmlinux
 
     - name: build modules
       working-directory: linux-stable
-      run: make modules
+      run: make INSTALL_PATH=${{ github.workspace }}/linux modules
+
+    #- name: setup for building external modules
+    #  working-directory: linux-stable
+    #  run: make INSTALL_PATH=${{ github.workspace }}/linux/lib modules_prepare
 
     - name: setup for building external modules
       working-directory: linux-stable
-      run: make INSTALL_PATH=${{ github.workspace }}/linux/lib modules_prepare
-
-    - name: setup for building external modules
-      working-directory: linux-stable
-      #run: make LLVM=1 modules_prepare
-      run: make INSTALL_MOD_PATH=${{ github.workspace }}/linux/lib modules_install
+      run: make INSTALL_MOD_PATH=${{ github.workspace }}/linux modules_install
 
     - name: install sanitized kernel headers
       working-directory: linux-stable
-      run: make INSTALL_HDR_PATH=${{ github.workspace }}/linux/usr/src headers_install
+      run: make INSTALL_HDR_PATH=${{ github.workspace }}/linux headers_install
 
 
+    - name: ls install dir
+      working-directory: ${{ github.workspace }}/linux
+      run: ls . */ */*/ */*/*/
 
     - name: ls module dir
       working-directory: ${{ github.workspace }}/linux

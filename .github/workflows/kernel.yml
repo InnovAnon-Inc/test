@@ -17,7 +17,8 @@ jobs:
     - name: install build deps
       uses: awalsh128/cache-apt-pkgs-action@latest
       with:
-        packages: fakeroot build-essential xz-utils \
+        packages: >
+          fakeroot build-essential xz-utils
           libssl-dev bc flex libelf-dev bison rsync
         version: 1.0
 

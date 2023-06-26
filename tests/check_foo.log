@@ -1,0 +1,4 @@
+Running suite(s): Foo
+paadh chak la
+100%: Checks: 1, Failures: 0, Errors: 0
+PASS check_foo (exit status: 0)

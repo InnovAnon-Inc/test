@@ -1,5 +1,6 @@
 bin_PROGRAMS = main
-main_SOURCES = main.c foo.h
+main_SOURCES = main.c
+include_HEADERS = foo.h
 main_LDADD = libfoo.la
 
 lib_LTLIBRARIES = libfoo.la

@@ -1,10 +1,10 @@
+*build*
 .deps/
 Makefile
 Makefile.in
 aclocal.m4
 ar-lib
 autom4te.cache/
-*build*
 build-aux/
 compile
 config.guess

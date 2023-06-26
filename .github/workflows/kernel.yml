@@ -69,7 +69,7 @@ jobs:
 
     - name: create installation package
       working-directory: ${{ github.workspace }}/linux
-      run: tar acpf ../linux-${{ env.tag }}.tar.xz -C ${{ github.workspace }}/linux .
+      run: tar acpf ../linux-${{ env.tag }}.tar.xz -C ${{ github.workspace }}/linux --exclude-vcs .
 
     #- name: sign installation package
     #  working-directory: ${{ github.workspace }}

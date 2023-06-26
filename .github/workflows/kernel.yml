@@ -5,6 +5,10 @@ on:
   schedule:
     - cron: '0 * * * *'
   #[workflow_call]
+  push:
+    branches: [ "kernel" ]
+  pull_request:
+    branches: [ "kernel" ]
 
 
 env:

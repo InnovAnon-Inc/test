@@ -75,11 +75,11 @@ jobs:
     #  working-directory: ${{ github.workspace }}
     #  run: gpg --yes --detach-sig linux-${{ env.tag }}.tar.xz
 
-    - name: Bump version and push tag
-      uses: mathieudutour/github-tag-action@v6.1
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        custom_tag: ${{ env.tag }}
+    #- name: Bump version and push tag
+    #  uses: mathieudutour/github-tag-action@v6.1
+    #  with:
+    #    github_token: ${{ secrets.GITHUB_TOKEN }}
+    #    custom_tag: ${{ env.tag }}
 
     - name: Release
       uses: softprops/action-gh-release@v1

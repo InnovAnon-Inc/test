@@ -77,7 +77,8 @@ if ("${KERNEL_HEADERS_DIR}" STREQUAL "")
   # Or you can set the kernel_headers_dir directly
   find_path(
     KERNEL_HEADERS_DIR
-    include/linux/user.h
+    #include/linux/user.h
+    NAMES include
     PATHS /usr/src/linux-headers-${KERNEL_RELEASE}
   )
 endif()

@@ -4,9 +4,9 @@ set -euxo nounset
 
 rm -rf build
 cmake -S . -B build                  \
-  -DKERNEL_HEADERS_DIR=$HOME/usr/src \
-  -DKERNEL_MODULES_DIR=$HOME/usr/lib/modules/6.2.10-1-aarch64-ARCH/build \
-  -GNinja -DCMAKE_BUILD_TYPE=Debug
+  -GNinja -DCMAKE_BUILD_TYPE=Debug 
+#  -DKERNEL_HEADERS_DIR=$HOME/usr/src \
+#  -DKERNEL_MODULES_DIR=$HOME/usr/lib/modules/6.2.10-1-aarch64-ARCH/build \
 cmake --build build
 cmake --build build --target test
 cmake --build build --target docs

@@ -3,17 +3,20 @@ set -euxo nounset
 (( $# ))
 
 rm -rf build
-cmake -S . -B build                  \
-  -GNinja -DCMAKE_BUILD_TYPE=Debug 
+cmake -S . -B build #                 \
+#  -GNinja -DCMAKE_BUILD_TYPE=Debug 
 #  -DKERNEL_HEADERS_DIR=$HOME/usr/src \
 #  -DKERNEL_MODULES_DIR=$HOME/usr/lib/modules/6.2.10-1-aarch64-ARCH/build \
 cmake --build build
+cmake --build build --target module
 cmake --build build --target test
 cmake --build build --target docs
 #cpack --build build --config CPackConfig.cmake
 #cpack --build build --config CPackSourceConfig.cmake
 cmake --build build --target package
 cmake --build build --target package_source
+
+exit 0
 
 #git clean -dfX
 [[ ! -e .gitignore-tmp ]]
@@ -24,5 +27,6 @@ git pull
 git add .
 git commit -m "$*"
 git push
+git clean -dfX
 git clean -dfX
 

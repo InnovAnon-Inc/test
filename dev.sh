@@ -2,6 +2,14 @@
 set -euxo nounset
 (( $# ))
 
+export PATH=/usr/lib/ccache:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export DISTCC_VERBOSE=1
+export DISTCC_FALLBACK=0
+
+git reset --hard
+git clean -fdX
+git clean -fdX
+
 autoreconf -i
 ./configure
 make
